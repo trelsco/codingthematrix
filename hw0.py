@@ -1,6 +1,5 @@
 
 
-
 ## Problem 1
 def myFilter(L, num): return [i for i in L if i%num==0]
 
