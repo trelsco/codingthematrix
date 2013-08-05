@@ -25,25 +25,28 @@ def equal(A, B):
     "Returns true iff A is equal to B"
     assert A.D == B.D
     return {(i,j):A[i,j] for i in A.D[0] for j in A.D[1]} == {(i,j):B[i,j] for i in B.D[0] for j in B.D[1]}
+    # create two dictionaries and compare 
+
 
 def transpose(M):
     "Returns the transpose of M" 
     return Mat( (M.D[1],M.D[0]) , {(j,i):M[i,j] for i in M.D[0] for j in M.D[1]})
-
+    # swap Row space with Column space 
+    
 def vector_matrix_mul(v, M):
     "Returns the product of vector v and matrix M"
     assert M.D[0] == v.D
-    vec = Vec(M.D[1],{})
-    for y in M.D[1]:
-        final_sum = 0
-        for x in M.D[0]:
-            k = (x, y)
-            if  M.f=={} or v.f=={}:
-                vec = Vec(M.D[1],{})
+    vec = Vec(M.D[1],{})   # create empty vector 
+    for y in M.D[1]:     # for each column in M
+        final_sum = 0   
+        for x in M.D[0]:  # for each row in M
+            k = (x, y)    # create tuple pair (R,C)
+            if  M.f=={} or v.f=={}:  # if v or M are empty
+                vec = Vec(M.D[1],{})  # return the zero vector
             else:
-                product = getitem(M,k) * v.f.get(x, 0)
-                final_sum = product+final_sum
-                vec[y] = final_sum
+                product = getitem(M,k) * v.f.get(x, 0)   # take dot-product of v and the row vecs of M
+                final_sum = product+final_sum   # accumulate products  
+                vec[y] = final_sum  
     return vec
     
 def matrix_vector_mul(M, v):
