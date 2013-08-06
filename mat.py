@@ -52,15 +52,28 @@ def vector_matrix_mul(v, M):
 def matrix_vector_mul(M, v):
     "Returns the product of matrix M and vector v"
     assert M.D[1] == v.D
-    return Vec( M.D[1] , { c: sum([v[c]*M[r,c] for r in M.D[0]]) for c in M.D[1] } )
+    product_vector = Vec(M.D[0],{}) # inititialize product
+    for r in M.D[0]:      # loop thru row elements of M
+        product_vector[r] = 0  
+        for c in M.D[1]:    # loop thru column elements
+            product_vector[r] += M[(r,c)] * v[c]  # take dot product of v and each column vector in M
+    return product_vector
+
+##    return Vec( M.D[0] , {r:sum([ M[(r,c)] * v[c] for c in M.D[1]]) for r in M.D[0]})
 
 
 def matrix_matrix_mul(A, B):
     "Returns the product of A and B"
     assert A.D[1] == B.D[0]
-    return Mat( ( A.D[1], B.D[0] ), { (r,c):A[r,c]*B[r,c] for r in A.D[1] for c in B.D[0] if A[r,c] and B[r,c] != 0} )
-    
-      
+    res_matrix = Mat((A.D[0],B.D[1]), {})   # initialize empty matrix with the row space of A and the column space of B
+    for i in res_matrix.D[0]:   # loop thru elements in row domain
+        for j in res_matrix.D[1]:  # loop thru elements in column domain
+            res_matrix[(i,j)] = 0   
+            for k in A.D[1]:    # for each key in the column domain of A 
+                res_matrix[(i,j)] += A[(i,k)] * B[(k,j)] # take dot product
+    return res_matrix
+            
+            
 ################################################################################
 
 class Mat:
