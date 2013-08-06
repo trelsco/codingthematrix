@@ -27,15 +27,13 @@ def listlist2mat(L):
 the procedure listlist2mat in the matutil module (be sure to import first).
 Since we are working over GF (2), you should use the value one from the
 GF2 module to represent 1"""
-G = listlist2mat([
-  	[ 1, 0, 1, 1],
-		[ 1, 1, 0, 1],
-		[ 0, 0, 0, 1],
-		[ 1, 1, 1, 0],
-		[ 0, 0, 1, 0],
-		[ 0, 1, 0, 0],
-		[ 1, 0, 0, 0]
-		])
+G = listlist2mat([[ one, 0, one, one],
+		  [ one, one, 0, one],
+		  [   0,   0, 0, one],
+		  [ one, one, one, 0],
+		  [   0,   0, one, 0],
+		  [   0, one,   0, 0],
+		  [ one,   0,   0, 0]])
 
 
 ## Task 1 part 2
@@ -49,7 +47,9 @@ R = None
 
 ## Task 3
 # Create an instance of Mat representing the check matrix H.
-H = None
+H = listlist2mat([ [ 0, 0, 0, one, one, one, one] ,
+                   [ 0, one, one, 0, 0, one, one] ,
+                   [ one, 0, one, 0, one, 0, one] ])
 
 ## Task 4 part 1
 def find_error(e):
