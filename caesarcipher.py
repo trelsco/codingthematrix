@@ -1,6 +1,6 @@
 import string
 
-### A crisp Caeser Cipher in Python using comprehensions and dictionary types
+### A crisp Caeser Cryto System in Python using comprehensions and dictionary types
 ### originally created while taking edX 6.00x from MIT; cleaned up after learning more on comprehensions
 
 def caesarCipher(shift):
