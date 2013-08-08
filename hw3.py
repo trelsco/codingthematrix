@@ -5,17 +5,17 @@ from vec import Vec
 
 ## Problem 1
 # Please represent your solutions as lists.
-vector_matrix_product_1 = ...
-vector_matrix_product_2 = ...
-vector_matrix_product_3 = ... 
-
+vector_matrix_product_1 = [ 1, 0 ]
+vector_matrix_product_2 = [ 0, 4.44 ]
+vector_matrix_product_3 = [ 14, 20, 26 ]
 
 
 ## Problem 2
 # Represent your solution as a list of rows.
 # For example, the identity matrix would be [[1,0],[0,1]].
 
-M_swap_two_vector = ...
+M_swap_two_vector = [ [ 0, 1 ]
+                      [ 1, 0 ] ]
 
 
 
@@ -33,13 +33,13 @@ multiplied_matrix = ... # Represent with a list of row lists.
 # Please enter a boolean representing if the multiplication is valid.
 # If it is not valid, please enter None for the dimensions.
 
-part_1_valid = ... # True or False
-part_1_number_rows = False # Integer or None
-part_1_number_cols = ... # Integer or None
+part_1_valid = False # True or False
+part_1_number_rows = None # Integer or None
+part_1_number_cols = None # Integer or None
 
-part_2_valid = ...
-part_2_number_rows = ...
-part_2_number_cols = ...
+part_2_valid = False
+part_2_number_rows = None
+part_2_number_cols = None
 
 part_3_valid = ...
 part_3_number_rows = ...
@@ -67,9 +67,11 @@ part_7_number_cols = ...
 ## Problem 6
 # Please represent your answer as a list of row lists.
 
-small_mat_mult_1 = ...
-small_mat_mult_2 = ...
-small_mat_mult_3 = ...
+small_mat_mult_1 = [ [ 8, 13 ],
+                     [ 8, 14 ] ]
+small_mat_mult_2 = [ [ 24, 11, 4 ],
+                     [  1,  3, 0 ] ]
+small_mat_mult_3 = [ [ 14, 0, 0 ] ]
 small_mat_mult_4 = ...
 small_mat_mult_5 = ...
 small_mat_mult_6 = ...
@@ -129,15 +131,15 @@ your_answer_f_BA = ...
 
 
 ## Problem 10
-column_row_vector_multiplication1 = Vec({0, 1}, {...})
+column_row_vector_multiplication1 = Vec({0, 1}, {0:13, 1:20})
 
-column_row_vector_multiplication2 = Vec({0, 1, 2}, {...})
+column_row_vector_multiplication2 = Vec({0, 1, 2},{0: 24, 1: 11, 2: 4})
 
-column_row_vector_multiplication3 = Vec({0, 1, 2, 3}, {...})
+column_row_vector_multiplication3 = Vec({0, 1, 2, 3},{0: 4, 1: 8, 2: 11, 3: 3})
 
-column_row_vector_multiplication4 = Vec({0,1}, {...})
+column_row_vector_multiplication4 = Vec({0, 1},{0: 30, 1: 16})
 
-column_row_vector_multiplication5 = Vec({0, 1, 2}, {...})
+column_row_vector_multiplication5 = Vec({0, 1, 2},{0: -3, 1: 7, 2: 3})
 
 
 
