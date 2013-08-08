@@ -43,7 +43,14 @@ encoding_1001 = None
 
 ## Task 2
 # Express your answer as an instance of the Mat class.
-R = None
+
+# R is a 4x7 matrix, R * c  = p
+# Which means G*(R*C) == c, and by asscociation (G*R)*c == c,
+# thus G*R is the 4x4 identity matrix
+R = listlist2mat([ [ 0, 0, 0, 0, 0, 0, one],
+                   [ 0, 0, 0, 0, 0, one, 0],
+                   [ 0, 0, 0, 0, one, 0, 0],
+                   [ 0, 0, one, 0, 0, 0, 0] ])
 
 ## Task 3
 # Create an instance of Mat representing the check matrix H.
