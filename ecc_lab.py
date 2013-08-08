@@ -27,6 +27,9 @@ def listlist2mat(L):
 the procedure listlist2mat in the matutil module (be sure to import first).
 Since we are working over GF (2), you should use the value one from the
 GF2 module to represent 1"""
+# G is a 7x4 matrix, G * p = c
+# where p is a four-bit message represented by a 4-vector over GF(2)
+# and c is the codeword
 G = listlist2mat([[ one, 0, one, one],
 		  [ one, one, 0, one],
 		  [   0,   0, 0, one],
