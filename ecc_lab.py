@@ -74,7 +74,12 @@ def find_error(e):
         >>> find_error(Vec({0,1,2}, {1:one, 2:one}))
         Vec({0, 1, 2, 3, 4, 5, 6},{2: one})    
     """
-    pass
+    res = -1   # to store value of corrupted position; the error syndrome
+    error = {0:4, 1:2, 2:1}    
+    for k,v in error.items():    
+      if e[k] == one: res += v
+    if res == -1: return Vec( {i for i in range(7)}, {} )
+    return Vec( {i for i in range(7)} , {res:one} )
 
 ## Task 4 part 2
 # Use the Vec class for your answers.
