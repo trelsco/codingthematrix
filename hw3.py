@@ -144,9 +144,21 @@ column_row_vector_multiplication5 = Vec({0, 1, 2},{0: -3, 1: 7, 2: 3})
 
 
 ## Problem 11
+
+## There are many ways to think of matrix-vector, vector-matrix, and matrix-matrix 
+## multiplication. In these definitions we use the linear combination definition 
+## and the dot-product definition of V-M and M-V multiplication . 
+## 
+
+## M*v = summation( v[c] * (column c of M) ) 
 def lin_comb_mat_vec_mult(M, v):
+    """ multiply matrix-vector with linear combinations"""
     assert(M.D[1] == v.D)
-    pass
+    product = Vec( M.D[0] , {} )    
+    for k,u in mat2coldict(M).items(): 
+        product += v.f[k] * u  # scale each vector by the element corresponding to k in v, accumulating the vectors into the final product
+    return product
+
 
 
 
