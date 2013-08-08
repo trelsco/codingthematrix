@@ -31,8 +31,7 @@ def vec_sum(veclist, D):
     >>> vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11})
     True
     '''
-    if len(veclist) == 0: return Vec(D, {})
-    else: return sum(veclist)
+    return sum(veclist, Vec( D, {} ) )
 
  
 def vec_select_sum(veclist, k, D): 
@@ -45,8 +44,8 @@ def vec_select_sum(veclist, k, D):
     >>> vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3})
     True
     '''
-    pass
-
+    return vec_sum(vec_select(veclist,k),D)
+    
 
 
 ## Problem 2
@@ -78,7 +77,11 @@ def GF2_span(D, L):
     >>> Vec(D, {x:one for x in D}) in GF2_span(D, L)
     True
     '''
-    pass
+    span = []
+    if len(L) == 0: return Vec(D,{})
+    for i in product({0,one},repeat=len(L)):
+        span.append(sum([a*v for (a,v) in zip(i,L)]))
+    return span
 
 
 
