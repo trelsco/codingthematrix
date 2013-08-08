@@ -77,7 +77,7 @@ def find_error(e):
     res = -1   # to store value of corrupted position; the error syndrome
     error = {0:4, 1:2, 2:1}    
     for k,v in error.items():    
-      if e[k] == one: res += v
+      if e[k] == one: res += v   #
     if res == -1: return Vec( {i for i in range(7)}, {} )
     return Vec( {i for i in range(7)} , {res:one} )
 
