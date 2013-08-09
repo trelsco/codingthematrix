@@ -84,7 +84,7 @@ def find_error(e):
 ## Task 4 part 2
 # Use the Vec class for your answers.
 non_codeword = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one, 6:one})
-error_vector = Vec(..., ...)
+error_vector = find_error(H*non_codeword)
 code_word = Vec(..., ...)
 original = ... # code_word * R
 
