@@ -81,12 +81,13 @@ def find_error(e):
     if res == -1: return Vec( {i for i in range(7)}, {} )
     return Vec( {i for i in range(7)} , {res:one} )
 
+    
 ## Task 4 part 2
 # Use the Vec class for your answers.
 non_codeword = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one, 6:one})
-error_vector = find_error(H*non_codeword)
-code_word = Vec(..., ...)
-original = ... # code_word * R
+error_vector = Vec({0,1,2,3,4,5,6}, {6:one})
+code_word = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one, 6:0})
+original = Vec({0,1,2,3}, {1:one,3:one})
 
 
 ## Task 5
