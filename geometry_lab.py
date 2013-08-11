@@ -2,6 +2,7 @@ from mat import Mat
 import math
 
 ## Task 1
+## 
 def identity(labels = {'x','y','u'}):
     '''
     In case you have never seen this notation for a parameter before,
@@ -12,7 +13,7 @@ def identity(labels = {'x','y','u'}):
     identity().  Additionally, if you want {'r','g','b'}, or another set, to be the
     labels of your matrix, you can call identity({'r','g','b'}).  
     '''
-    pass
+    return Mat( (labels,labels) , {(label,label):1 for label in labels } )
 
 ## Task 2
 def translation(x,y):
@@ -20,7 +21,7 @@ def translation(x,y):
     Input:  An x and y value by which to translate an image.
     Output:  Corresponding 3x3 translation matrix.
     '''
-    pass
+    return Mat( (
 
 ## Task 3
 def scale(a, b):
