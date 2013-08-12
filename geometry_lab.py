@@ -21,7 +21,19 @@ def translation(x,y):
     Input:  An x and y value by which to translate an image.
     Output:  Corresponding 3x3 translation matrix.
     '''
-    return Mat( (
+    return Mat(({'y', 'x', 'u'}, {'y', 'x', 'u'}),
+                {('u', 'u'): 1,
+                 ('u', 'y'): x,
+                 ('y', 'y'): 1,
+                 ('x', 'y'): y,
+                 ('x', 'x'): 1})
+                 
+# Tried generating with identity, didn't work so I "hardcoded" the correct values into the matrix
+#   [ 1 0 x ]
+#   [ 0 1 y ]   <--- That is a 3x3 translation matrix
+#   [ 0 0 1 ]
+#
+print(translation(2,3)) 
 
 ## Task 3
 def scale(a, b):
