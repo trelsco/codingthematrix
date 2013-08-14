@@ -58,6 +58,7 @@ def rotation(angle):
                 ('y','y'): math.cos(angle),
                 ('u','u'): 1})
 
+
 ## Task 5
 def rotate_about(x,y,angle):
     '''
@@ -66,7 +67,9 @@ def rotate_about(x,y,angle):
     Output:  Corresponding 3x3 rotation matrix.
     It might be helpful to use procedures you already wrote.
     '''
-    pass
+    return translation(x,y) * rotation(angle) * translation(-x,-y)
+    # shift back to te origin , rotate, then shift back to original coodinates
+    # we are composing three functions together, where associtation rules
 
 ## Task 6
 def reflect_y():
