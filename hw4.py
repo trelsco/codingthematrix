@@ -79,10 +79,10 @@ linear_dep_R_3 = [1,1,1,1,1]
 # Assign sum_to to the vector that you are expressing as a linear combination
 # of the other two. Write the name of the vector as a STRING. i.e. 'u' or 'w'
 
-u = 1
-v = 0
-w = 1
-sum_to = 'v'
+u = -1
+v = 1
+w = 0
+sum_to = 'w'
 
 
 
