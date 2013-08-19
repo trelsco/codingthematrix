@@ -202,7 +202,7 @@ def is_superfluous(L, i):
     A = coldict2mat(L)
     u = solve(A,b)
     residual = b - A*u
-    return residual*residual > 1e-14
+    return (residual*residual) < 1e-14
     
 
 
