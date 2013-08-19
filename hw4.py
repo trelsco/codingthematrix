@@ -230,7 +230,11 @@ def is_independent(L):
     >>> is_independent(vlist[5:])
     True
     '''
-    pass
+    for i in range(len(L)-1):
+        veclist_cp = []
+        for v in L: veclist_cp.append(v)
+        if is_superfluous(veclist_cp, i): return False
+    return True
 
 
 
