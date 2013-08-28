@@ -1,4 +1,4 @@
-from vec import Vec
+rom vec import Vec
 from GF2 import one
 
 from factoring_support import dumb_factor
@@ -69,7 +69,7 @@ def make_Vec(primeset, factors):
     return Vec( primeset , { k: int2GF2(v) for (k,v) in factors } )
 
 ## Task 3
-def find_candidate(N, primeset):
+def find_candidates(N, primeset):
     '''
     Input:
         - N: an int to factor
@@ -84,10 +84,12 @@ def find_candidate(N, primeset):
           such that len(roots) = len(rowlist) and len(roots) > len(primeset)
     '''
     roots, rowlist, i = [], [], 2
-    while len(roots) < len(primeset)+1:
-        x = intsqrt(N) + i
-        if dumb_factor( x*x - N , primeset) != []:
-            roots.append(x)
+    while len(roots) < len(primeset)+1:  # continue until 
+        x = intsqrt(N) + i  
+        if dumb_factor( x*x - N , primeset) != []:  # ask if x*x-N is unfactorable
+            roots.append(x)   # if not, then append to root list
+            # append to rowlist a vector mapping the parity of the exponent to an element in GF2 (1 or 0)
+            # the elements in the domain of this vec are the primes in primeset
             rowlist.append(make_Vec(primeset, dumb_factor( x*x-N, primeset )))
         i += 1
     return roots, rowlist
@@ -107,7 +109,13 @@ def find_a_and_b(v, roots, N):
       such that a*a-b*b is a multiple of N
       (if v is correctly chosen)
     '''
-    pass
+    alist = [ root for root in v.D if v[root] == one ]  # create list of roots corresponding to the nonzero entries of the vector v
+    a = prod( alist )
+    c = prod({ x*x-N for x in alist })
+    b = intsqrt(c)
+    assert b*b == c
+    return (a, b)
+    
 
 ## Task 5
 
