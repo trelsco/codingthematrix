@@ -1,4 +1,5 @@
-rom vec import Vec
+
+from vec import Vec
 from GF2 import one
 
 from factoring_support import dumb_factor
@@ -109,7 +110,7 @@ def find_a_and_b(v, roots, N):
       such that a*a-b*b is a multiple of N
       (if v is correctly chosen)
     '''
-    alist = [ root for root in v.D if v[root] == one ]  # create list of roots corresponding to the nonzero entries of the vector v
+    alist = [ roots[root] for root in v.D if v[root] == one ]  # create list of roots corresponding to the nonzero entries of the vector v
     a = prod( alist )
     c = prod({ x*x-N for x in alist })
     b = intsqrt(c)
@@ -118,5 +119,11 @@ def find_a_and_b(v, roots, N):
     
 
 ## Task 5
+##N = 2461799993978700679
+##primelist = primes(10000)   # build set of primes up to 10000
+##roots, rowlist = find_candidates(N, primelist)  # compute roots and rowlist
+##M = echelon.transformation(rowlist)     # get matrix M from rowlist , put in echelon form
 
-smallest_nontrivial_divisor_of_2461799993978700679 = ... 
+
+smallest_nontrivial_divisor_of_2461799993978700679 = 1230926561
+
