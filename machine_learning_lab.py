@@ -15,7 +15,11 @@ def signum(u):
         >>> signum(Vec({1,2,3},{1:2, 2:-1})) == Vec({1,2,3},{1:1,2:-1,3:1})
         True
     '''
-    pass
+    v = Vec( u.D, {} )
+    for entry in u.D:
+        if u[entry] >= 0: v[entry] = 1
+        else: v[entry] = -1
+    return v
 
 ## Task 2 ##
 def fraction_wrong(A, b, w):
