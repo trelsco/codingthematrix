@@ -21,6 +21,14 @@ def signum(u):
         else: v[entry] = -1
     return v
 
+
+# test signum
+u = Vec({'A','B'}, {'A':3, 'B':-2})
+print(u),
+print(signum(u))
+print(signum(u) == Vec({'A', 'B'},{'A': 1, 'B': -1}))
+
+
 ## Task 2 ##
 def fraction_wrong(A, b, w):
     '''
@@ -32,7 +40,10 @@ def fraction_wrong(A, b, w):
         - Fraction (as a decimal in [0,1]) of vectors incorrectly
           classified by w 
     '''
-    pass
+    v, frac = signum( A*w ), 0
+    for i,j in zip(v.D,b.D):
+        if v[i] != b[i]: frac += 1
+    return float(frac)/len(b.D)
 
 ## Task 3 ##
 def loss(A, b, w):
