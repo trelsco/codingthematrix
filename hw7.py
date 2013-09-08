@@ -1,150 +1,164 @@
+# version code 1049
+# Please fill out this stencil and submit using the provided submission script.
+
+from orthogonalization import orthogonalize
+import orthonormalization
 from mat import Mat
 from vec import Vec
-from cancer_data import *
-
-from matutil import listlist2mat
 from vecutil import list2vec
+from matutil import listlist2mat
+from math import sqrt
 
 
-#from vecutil import list2vec
-#from matutil import listlist2mat
+"""
+After using one's understanding of linear algebra many of these
+problems become very simple, requiring no loops or comprehensions at all,
+but simplejust matrix-matrix , vector-matrix, and matrix-vector multiplication. 
+"""
 
-## Task 1 ##
-def signum(u):
+## Problem 1
+def basis(vlist):
     '''
     Input:
-        - u: Vec
+        - vlist: a list of Vecs
     Output:
-        - v: Vec such that:
-            if u[d] >= 0, then v[d] =  1
-            if u[d] <  0, then v[d] = -1
+        - a list of linearly independent Vecs with equal span to vlist
+    '''
+    return [ v for v in orthogonalize(vlist) if v*v > 10e-20 ]
+
+# test basis function
+
+
+
+## Problem 2
+def subset_basis(vlist):
+    '''
+    Input:
+        - vlist: a list of Vecs
+    Output:
+        - linearly independent subset of vlist with the same span as vlist
+    '''
+    initial_res = orthogonalize(vlist)
+    return [ initial_res[v] for v in len(range(vlist)) if vlist[v] * vlist[v] > 10e-20 ] 
+
+
+
+## Problem 3
+def orthogonal_vec2rep(Q, b):
+    '''
+    Input:
+        - Q: an orthogonal Mat
+        - b: Vec whose domain equals the column-label set of Q.
+    Output:
+        - The coordinate representation of b in terms of the rows of Q.
     Example:
-        >>> signum(Vec({1,2,3},{1:2, 2:-1})) == Vec({1,2,3},{1:1,2:-1,3:1})
+        >>> Q = Mat(({0, 1}, {0, 1}), {(0, 1): 0, (1, 0): 0, (0, 0): 2, (1, 1): 2})
+        >>> b = Vec({0, 1},{0: 4, 1: 2})
+        >>> orthogonal_vec2rep(Q, b) == Vec({0, 1},{0: 8, 1: 4})
         True
     '''
-    v = Vec( u.D , {} )
-    for entry in u.D:
-        if u[entry] >= 0: v[entry] = 1
-        else: v[entry] = -1
-    return v
+    return Q * b
 
-### test signum
-##u = Vec({'A','B'}, {'A':3, 'B':-2})
-##print(u),
-##print(signum(u))
-##print(signum(u) == Vec({'A', 'B'},{'A': 1, 'B': -1}))
-
-
-## Task 2 ##
-# In the problem description, there is mentioned a clever one-liner
-# solution that is possible, without using any explicit loops or comprehension,
-# hm... 
-# Remembering the relationship of the dot-product and the number of
-# differing elements
-
-
-def fraction_wrong(A, b, w):
-    '''
-    Input:
-        - A: a Mat with rows as feature vectors
-        - b: a Vec of actual diagnoses
-        - w: hypothesis Vec
-    Output:
-        - Fraction (as a decimal in [0,1]) of vectors incorrectly
-          classified by w 
-    '''
-    v , frac = signum( A * w ), 0  # v becomes an row vector, frac is the number of mismatches
-    for i,j in zip(v.D, b.D):
-        if v[i] != b[j]: frac += 1
-    return float(frac) / len(b.D)   # create percentage of mismatches to whole
-
-#    return sum([ v[i]*w[j] for i,j in zip(v.D, b.D) if v[i] != b[j] ])*1.0 / len(b.D) 
-
-
-# test fraction_wrong
-##A1 = listlist2mat([[10, 7, 11, 10, 14], [1, 1, 13, 3, 2], [6, 13, 3, 2, 6], [10, 10, 12, 1, 2], [2, 1, 5, 7, 10]])
-##b1 = list2vec([1,1,-1,-1,1])
-##w1 = Vec(A1.D[1], {x:-2 for x in A1.D[1]})
-##fraction_wrong(A1, b1, w1) == 0.6 
-
-## Task 3 ##
-## This is equivalent to the norm squared of Aw-b, ||Aw-b||^2
-def loss(A, b, w):
-    '''
-    Input:
-        - A: feature Mat
-        - b: diagnoses Vec
-        - w: hypothesis Vec
-    Output:
-        - Value of loss function at w for training data
-    '''
-    return ( A * w - b) * ( A * w - b)
-
-# One reason for this choice of loss function is that the partial
-# derivatives of this function  exist and are easy to compute (w/ a little bit a calculus)
-
-## Task 4 ##
-def find_grad(A, b, w):
-    '''
-    Input:
-        - A: feature Mat
-        - b: diagnoses Vec
-        - w: hypothesis Vec
-    Output:
-        - Value of the gradient function at w
-    '''
-    return 2 * (A * w - b) * A
-
-## Task 5 ##
-def gradient_descent_step(A, b, w, sigma):
-    '''
-    Input:
-        - A: feature Mat
-        - b: diagnoses Vec
-        - w: hypothesis Vec
-        - sigma: step size
-    Output:
-        - The vector w' resulting from 1 iteration of gradient descent
-          starting from w and moving sigma.
-    '''
-    return w - sigma*find_grad(A, b, w)
-
-### test gradient_descent_step
-##A1 = listlist2mat([[10, 7, 11, 10, 14], [1, 1, 13, 3, 2], [6, 13, 3, 2, 6], [10, 10, 12, 1, 2], [2, 1, 5, 7, 10]])
-##b1 = list2vec([1, 1, -1, -1, 1])
-##print(A1)
-##print(b1)
-##print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2))
-##print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2) == Vec({0, 1, 2, 3, 4},{0: 8946, 1: 9134, 2: 11790, 3: 6866, 4: 10214}))
+### test orthogonal_vec2rep
+##Q = listlist2mat([ [  1/sqrt(2), 1/sqrt(2),         0 ]
+##                   [  1/sqrt(3), 1/sqrt(3), 1/sqrt(3) ] 
+##                   [ -1/sqrt(6), 1/sqrt(6), 2/sqrt(6) ] ])
 ##
+##b = list2vec([ 10, 20, 30 ])
+##
+##print(Q)
+##print(b)
+##print(orthogonal_vec2rep(Q,b))
 
-# Ungraded Task
-# This is putting together all of the pieces for the lab
-# into the final gradient descent procedure .
 
 
-
-def gradient_descent(A, b, w, sigma, T):
-    """
+## Problem 4
+def orthogonal_change_of_basis(A, B, a):
+    '''
     Input:
-       - A: feature matrix
-       - b: diagnoses vector
-       - w: hypothesis vector
-       - sigma: step size
-       - T: number of iterations
+        - A: an orthogonal Mat
+        - B: an orthogonal Mat whose column labels are the row labels of A
+        - a: the coordinate representation in terms of rows of A of some vector v 
     Output:
-       - final value of w for T iterations
-    """
-    _T = T  # save the initial value for T
-    while T != 0:   
-        w = gradient_descent_step(A, b, w, sigma)
-        T -= 1    
-        if _T - T == 30:   # Every 30 iterations, print diagnostic data
-            print('Loss = ' + str(loss(A,b,w))),
-            print('Fraction Wrong = ' + str(fraction_wrong(A,b,w)))
-            _T = T
-    return w
+        - the Vec b such that b is the coordinate representation of v in terms of columns of B
+    Example:
+        >>> A = Mat(({0, 1, 2}, {0, 1, 2}), {(0, 1): 0, (1, 2): 0, (0, 0): 1, (2, 0): 0, (1, 0): 0, (2, 2): 1, (0, 2): 0, (2, 1): 0, (1, 1): 1})
+        >>> B = Mat(({0, 1, 2}, {0, 1, 2}), {(0, 1): 0, (1, 2): 0, (0, 0): 2, (2, 0): 0, (1, 0): 0, (2, 2): 2, (0, 2): 0, (2, 1): 0, (1, 1): 2})
+        >>> a = Vec({0, 1, 2},{0: 4, 1: 1, 2: 3})
+        >>> orthogonal_change_of_basis(A, B, a) == Vec({0, 1, 2},{0: 8, 1: 2, 2: 6})
+        True
+    '''
+    return (a*A) * B
 
+
+
+## Problem 5
+def orthonormal_projection_orthogonal(W, b):
+    '''
+    Input:
+        - W: Mat whose rows are orthonormal
+        - b: Vec whose labels are equal to W's column labels
+    Output:
+        - The projection of b orthogonal to W's row space.
+    Example: 
+        >>> W = Mat(({0, 1}, {0, 1, 2}), {(0, 1): 0, (1, 2): 0, (0, 0): 1, (1, 0): 0, (0, 2): 0, (1, 1): 1})
+        >>> b = Vec({0, 1, 2},{0: 3, 1: 1, 2: 4})
+        >>> orthonormal_projection_orthogonal(W, b) == Vec({0, 1, 2},{0: 0, 1: 0, 2: 4})
+        True
+    '''
+    return b * W
+
+
+
+## Problem 6
+# Write your solution for this problem in orthonormalization.py.
+
+
+
+## Problem 7
+# Write your solution for this problem in orthonormalization.py.
+
+
+
+## Problem 8
+# Please give each solution as a Vec
+
+least_squares_A1 = listlist2mat([[8, 1], [6, 2], [0, 6]])
+least_squares_Q1 = listlist2mat([[.8,-0.099],[.6, 0.132],[0,0.986]])
+least_squares_R1 = listlist2mat([[10,2],[0,6.08]]) 
+least_squares_b1 = list2vec([10, 8, 6])
+
+x_hat_1 = ...
+
+
+least_squares_A2 = listlist2mat([[3, 1], [4, 1], [5, 1]])
+least_squares_Q2 = listlist2mat([[.424, .808],[.566, .115],[.707, -.577]])
+least_squares_R2 = listlist2mat([[7.07, 1.7],[0,.346]])
+least_squares_b2 = list2vec([10,13,15])
+
+x_hat_2 = ...
+
+
+
+## Problem 9
+def QR_solve(A, b):
+    '''
+    Input:
+        - A: a Mat
+        - b: a Vec
+    Output:
+        - vector x that minimizes norm(b - A*x)
+    Example:
+        >>> domain = ({'a','b','c'},{'A','B'})
+        >>> A = Mat(domain,{('a','A'):-1, ('a','B'):2,('b','A'):5, ('b','B'):3,('c','A'):1,('c','B'):-2})
+        >>> Q, R = QR.factor(A)
+        >>> b = Vec(domain[0], {'a': 1, 'b': -1})
+        >>> x = QR_solve(A, b)
+        >>> result = A.transpose()*(b-A*x)
+        >>> result * result < 1E-10
+        True
+    '''
+    pass
 
 
 
