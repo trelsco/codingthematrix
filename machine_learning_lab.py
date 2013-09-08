@@ -1,9 +1,13 @@
-from mat import *
-from vec import *
+from mat import Mat
+from vec import Vec
 from cancer_data import *
 
-from vecutil import list2vec
 from matutil import listlist2mat
+from vecutil import list2vec
+
+
+#from vecutil import list2vec
+#from matutil import listlist2mat
 
 ## Task 1 ##
 def signum(u):
@@ -105,11 +109,43 @@ def gradient_descent_step(A, b, w, sigma):
     '''
     return w - sigma*find_grad(A, b, w)
 
-# test gradient_descent_step
-A1 = listlist2mat([[10, 7, 11, 10, 14], [1, 1, 13, 3, 2], [6, 13, 3, 2, 6], [10, 10, 12, 1, 2], [2, 1, 5, 7, 10]])
-b1 = list2vec([1, 1, -1, -1, 1])
-print(A1)
-print(b1)
-print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2))
-print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2) == Vec({0, 1, 2, 3, 4},{0: 8946, 1: 9134, 2: 11790, 3: 6866, 4: 10214}))
+### test gradient_descent_step
+##A1 = listlist2mat([[10, 7, 11, 10, 14], [1, 1, 13, 3, 2], [6, 13, 3, 2, 6], [10, 10, 12, 1, 2], [2, 1, 5, 7, 10]])
+##b1 = list2vec([1, 1, -1, -1, 1])
+##print(A1)
+##print(b1)
+##print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2))
+##print(gradient_descent_step(A1, b1, Vec(A1.D[1], {x:-2 for x in A1.D[1]}), 2) == Vec({0, 1, 2, 3, 4},{0: 8946, 1: 9134, 2: 11790, 3: 6866, 4: 10214}))
+##
+
+# Ungraded Task
+# This is putting together all of the pieces for the lab
+# into the final gradient descent procedure which, for every 
+# number T of iterations prints out the value of the loss functions
+# for the updated value of w, 
+
+def gradient_descent(A, b, w, sigma, T):
+    """
+    Input:
+       - A: feature matrix
+       - b: diagnoses vector
+       - w: hypothesis vector
+       - sigma: step size
+           - T: number of iterations
+    Output:
+       - final value of w for T iterations
+    """
+    _T = T
+    while T != 0:
+        w = gradient_descent_step(A, b, w, sigma)
+        T -= 1
+        if _T - T == 60:
+            print('Loss = ' + str(loss(A,b,w)))
+            print(' Fraction Wrong = ' + str(fraction_wrong(A,b,w)))
+            _T = T
+    return w
+
+
+
+
 
